@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Book Library</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1>Welcome to the Book Library</h1>
+
+    <div sec:authorize="isAuthenticated()">
+        <p>Logged in as: <span sec:authentication="name"></span></p>
+        <p>Roles: <span sec:authentication="principal.authorities"></span></p>
+        
+        <div sec:authorize="hasRole('ADMIN')">
+            <a href="/admin/addBook">Add a Book</a>
+        </div>
+        
+        <form method="post" th:action="@{/logout}">
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()">
+        <a href="/login">Log in</a>
+    </div>
+
+    <h2>Available Books</h2>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}">Title</td>
+            <td th:text="${book.author}">Author</td>
+            <td><a th:href="@{/viewBook/{id}(id=${book.id})}">View</a></td>
+        </tr>
+    </table>
+</body>
+</html>

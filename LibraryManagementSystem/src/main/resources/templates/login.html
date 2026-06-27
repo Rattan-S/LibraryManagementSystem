@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Log in screen</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h2>Enter your information to log in</h2>
+    
+    <div th:if="${param.error}" class="error-message">Bad credentials</div>
+    <div id="error" class="error-message"></div>
+
+    <form name="form" th:action="@{/login}" method="post">
+        <label>User name: </label>
+        <input type="text" name="username"><br>
+        
+        <label>Password: </label>
+        <input type="password" name="password"><br>
+        
+        <input type="submit" value="Log in">
+        
+        <hr class="divider">
+        <p class="register-prompt">Not registered?</p>
+        
+        <input type="button" value="Register here" class="secondary-btn" onclick="window.location.href='/register';">
+    </form>
+    
+    <div class="back-link-container">
+        <a th:href="@{/}">Back to index</a>
+    </div>
+</body>
+</html>

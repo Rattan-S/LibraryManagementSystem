@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>View Book</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h2>Book Details</h2>
+    
+    <div th:if="${book != null}">
+        <form>
+            <p><strong>Title:</strong> <span th:text="${book.title}"></span></p>
+            <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
+
+            <hr>
+            <h3>Reviews</h3>
+            
+            <ul th:if="${book.reviews != null and !book.reviews.isEmpty()}">
+                <li th:each="review : ${book.reviews}" th:text="${review.text}" class="review-item"></li>
+            </ul>
+            
+            <p th:if="${book.reviews == null or book.reviews.isEmpty()}">This book has no reviews yet.</p>
+
+            <div class="action-section">
+                <a th:href="@{/user/addReview/{id}(id=${book.id})}">Add a Review</a>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${book == null}">
+        <form>
+            <h3 class="error-heading">Book not found.</h3>
+        </form>
+    </div>
+
+    <a th:href="@{/}">Back to Home</a>
+</body>
+</html>
